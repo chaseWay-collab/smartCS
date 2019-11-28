@@ -10,14 +10,15 @@
 <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js" ></script>
 <script type="text/javascript" src="adminjs/form.js" ></script>
 </head>
-<body>
-	<!-- 条件搜索 -->
+<body style="background:url('images/background.gif');background-size:100% 100%">
+	<!-- 条件查询 -->
 	<div style="text-align:center"><img alt="asset" src="images/asset.png" align="middle"></div>
 	<fieldset>
-		<legend>条件搜索</legend>
-		<label for="name">资产名称：</label><input id="name" name="name"/>
-		<label for="num">资产编号：</label><input id="num" name="num"/>
-		<button id="searchBtn">搜索</button>
+		<legend>条件查询</legend>
+		<label for="name"></label><input id="name" name="name" placeholder="按资产名称查询" />
+		<label for="num"></label><input id="num" name="num" placeholder="按资产编号查询"/>
+		<button id="searchBtn" style="background:url('images/query.png')no-repeat;
+		background-size:30px 30px;width:30px;height:30px;border:none;"></button>
 	</fieldset><br/>
 	<!-- 使用datagrid组件 -->
 	<table id="dg"></table>
@@ -57,7 +58,7 @@
 				cache: false, // 是否缓存
 				modal: true, // 是否显示遮挡层
 				buttons:[{ // 按钮
-				      text:'添加', 
+				      text:'确认', 
 				      handler:function(){
 				    	  // 警告框
 				    	  //$.messager.alert('系统提示','这里是点击保存触发的事件');
