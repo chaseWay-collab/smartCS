@@ -12,10 +12,11 @@
 </head>
 <body>
 	<!-- 条件搜索 -->
+	<div style="text-align:center"><img alt="asset" src="images/asset.png" align="middle"></div>
 	<fieldset>
 		<legend>条件搜索</legend>
-		<label for="name">名称：</label><input id="name" name="name"/>
-		<label for="num">设备号：</label><input id="num" name="num"/>
+		<label for="name">资产名称：</label><input id="name" name="name"/>
+		<label for="num">资产编号：</label><input id="num" name="num"/>
 		<button id="searchBtn">搜索</button>
 	</fieldset><br/>
 	<!-- 使用datagrid组件 -->
@@ -26,8 +27,8 @@
 			<form id="assetForm">
 				<!-- 定义一个隐藏域，用于记录修改学生的ID -->
 				<input type="hidden" id="id" name="id"/>
-				<label for="deviceName">名称：</label><input id="deviceName" name="name"/><br/><br/>
-				<label for="deviceNum">设备号：</label><input id="deviceNum" name="num"/><br/><br/>
+				<label for="deviceName">资产名称：</label><input id="deviceName" name="name"/><br/><br/>
+				<label for="deviceNum">资产编号：</label><input id="deviceNum" name="num"/><br/><br/>
 				<label for="rfid">rfid：</label><input id="rfid" name="rfid"/><br/><br/>
 			</form>
 		</div>
@@ -49,14 +50,14 @@
 			
 			// 初始化对话框
 			$('#dl').dialog({
-				title: '学生信息', // 标题
+				title: '资产信息', // 标题
 				width: 300, // 宽度
 			    height: 200, // 高度
 				closed: true, // 默认是否关闭，true代表默认关闭
 				cache: false, // 是否缓存
 				modal: true, // 是否显示遮挡层
 				buttons:[{ // 按钮
-				      text:'保存', 
+				      text:'添加', 
 				      handler:function(){
 				    	  // 警告框
 				    	  //$.messager.alert('系统提示','这里是点击保存触发的事件');
@@ -64,11 +65,11 @@
 				    	  var num = $("#deviceNum").val();
 				    	  var rfid = $("#rfid").val();
 				    	  if (name == '') {
-				    		  $.messager.alert('警告', '姓名不能够为空！');
+				    		  $.messager.alert('警告', '资产名称不能够为空！');
 				    		  return;
 				    	  }
 				    	  if (num == '') {
-				    		  $.messager.alert('警告', '学号不能够为空！');
+				    		  $.messager.alert('警告', '资产编号不能够为空！');
 				    		  return;
 				    	  }
 				    	  if (rfid == '') {
@@ -199,12 +200,12 @@
 			    ],
 			    columns:[[
 					{checkbox:true,width:30},
-			        {field:'id',title:'编号',width:100},    
-			        {field:'name',title:'姓名',width:200},
-			        {field:'num',title:'学号',width:200},
+			        {field:'id',title:'ID',width:100},    
+			        {field:'name',title:'资产名称',width:200},
+			        {field:'num',title:'资产编号',width:200},
 			        {field:'rfid',title:'rfid',width:200},
 			        {field:'state',title:'状态',width:200, formatter:function(value, rowData, rowIndex) {
-			        	return value == 0 ? "在读".fontcolor("green") : "已毕业".fontcolor("red");
+			        	return value == 0 ? "正常".fontcolor("green") : "损坏".fontcolor("red");
 			        }}  
 			    ]],
 			    pagination: true, // 显示分页栏

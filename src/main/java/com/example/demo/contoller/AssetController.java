@@ -11,7 +11,6 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
 
 import com.example.demo.entity.Asset;
-import com.example.demo.entity.Student;
 import com.example.demo.service.IAssetService;
 import com.example.demo.utils.Pagination;
 import com.github.pagehelper.PageInfo;
@@ -23,12 +22,12 @@ public class AssetController extends BaseController {
 	private IAssetService assetService;
 	
 	/*@RequestMapping(value="/getData.do", produces="application/json;charset=utf-8")
-	public List<Student> getData() {
-		return studentService.findAll();
+	public List<Asset> getData() {
+		return assetService.findAll();
 	}*/
 	
 	@RequestMapping(value="/deleteAll.do", produces="application/json;charset=utf-8")
-	public Map<String, Object> deleteAllStudent(String ids) {
+	public Map<String, Object> deleteAllAsset(String ids) {
 		try {
 			String[] idArr = ids.split(",");
 			assetService.deleteBatch(idArr);
@@ -40,7 +39,7 @@ public class AssetController extends BaseController {
 	}
 	
 	@RequestMapping(value="/delete.do", produces="application/json;charset=utf-8")
-	public Map<String, Object> deleteStudent(String id) {
+	public Map<String, Object> deleteAsset(String id) {
 		try {
 			assetService.delete(Integer.parseInt(id));
 			return ajaxReturn(true, "删除成功！");
@@ -51,12 +50,12 @@ public class AssetController extends BaseController {
 	}
 	
 	@RequestMapping(value="/update.do", produces="application/json;charset=utf-8")
-	public Map<String, Object> updateStudent(Asset asset) {
-		System.out.println("student = " + asset);
+	public Map<String, Object> updateAsset(Asset asset) {
+		System.out.println("asset = " + asset);
 		try {
 			// 查询学号和rfid是否存在，如果存在就执行保存操作
 			boolean isOk = assetService.checkNumAndRfid(asset.getId(), asset.getNum(), asset.getRfid());
-			System.out.println("student = " + asset);
+			System.out.println("asset = " + asset);
 			if (isOk) {
 				assetService.update(asset);
 				
@@ -71,7 +70,7 @@ public class AssetController extends BaseController {
 	}
 	
 	@RequestMapping(value="/add.do", produces="application/json;charset=utf-8")
-	public Map<String, Object> addStudent(Asset asset) {
+	public Map<String, Object> addAsset(Asset asset) {
 		try {
 			// 查询学号和rfid是否存在，如果存在就执行保存操作
 			boolean isOk = assetService.checkNumAndRfid(asset.getNum(), asset.getRfid());
@@ -89,9 +88,9 @@ public class AssetController extends BaseController {
 	}
 	
 	@RequestMapping(value="/getData.do", produces="application/json;charset=utf-8")
-	public Pagination<Student> getData(String name, String num, String page, String rows) {
+	public Pagination<Asset> getData(String name, String num, String page, String rows) {
 		// 动态拼接查询条件
-		Example example = new Example(Student.class);
+		Example example = new Example(Asset.class);
 		// 通过example对象创建一个Criteria对象
 		Criteria c = example.createCriteria();
 		if (name != null && !"".equals(name)) {
@@ -107,7 +106,7 @@ public class AssetController extends BaseController {
 				, Integer.parseInt(page), Integer.parseInt(rows));
 		// 创建PageInfo对象，该对象自动计算分页的信息
 		PageInfo pageInfo = new PageInfo(list);
-		Pagination<Student> pagination = new Pagination();
+		Pagination<Asset> pagination = new Pagination();
 		pagination.setTotal(pageInfo.getTotal());
 		pagination.setRows(list);
 		return pagination;
