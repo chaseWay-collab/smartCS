@@ -3,6 +3,7 @@ package com.example.demo.contoller;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,10 +22,6 @@ public class StudentController extends BaseController {
 	@Autowired
 	private IStudentService studentService;
 	
-	/*@RequestMapping(value="/getData.do", produces="application/json;charset=utf-8")
-	public List<Student> getData() {
-		return studentService.findAll();
-	}*/
 	
 	@RequestMapping(value="/deleteAll.do", produces="application/json;charset=utf-8")
 	public Map<String, Object> deleteAllStudent(String ids) {
@@ -51,14 +48,12 @@ public class StudentController extends BaseController {
 	
 	@RequestMapping(value="/update.do", produces="application/json;charset=utf-8")
 	public Map<String, Object> updateStudent(Student student) {
-		System.out.println("student = " + student);
+//		System.out.println("student = " + student);
 		try {
 			// 查询学号和rfid是否存在，如果存在就执行保存操作
 			boolean isOk = studentService.checkNumAndRfid(student.getId(), student.getNum(), student.getRfid());
-			System.out.println("student = " + student);
 			if (isOk) {
 				studentService.update(student);
-				
 				return ajaxReturn(true, "修改成功");
 			} else {
 				return ajaxReturn(false, "学号或rfid已经存在！");
@@ -76,7 +71,6 @@ public class StudentController extends BaseController {
 			boolean isOk = studentService.checkNumAndRfid(student.getNum(), student.getRfid());
 			if (isOk) {
 				studentService.add(student);
-
 				return ajaxReturn(true, "添加成功");
 			} else {
 				return ajaxReturn(false, "学号或rfid已经存在！");

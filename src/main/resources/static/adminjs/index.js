@@ -14,7 +14,8 @@ var _menus={
 					[
 						{"icon":"icon-sys","menuid":"101","menuname":"监测数据查询","url":"listEnv.html"},
 						{"icon":"icon-sys","menuid":"102","menuname":"学生管理","url":"student.html"},
-						{"icon":"icon-sys","menuid":"103","menuname":"资产管理","url":"asset.html"}
+						{"icon":"icon-sys","menuid":"103","menuname":"资产管理","url":"asset.html"},
+						{"icon":"icon-sys","menuid":"103","menuname":"角色管理","url":"role.html"}
 					]
 			 	},
 			 	{

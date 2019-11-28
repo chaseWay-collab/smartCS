@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.shiro.SecurityUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,7 @@ public class MenuController extends BaseController {
 	
 	@RequestMapping(value="/getTreeData.do", produces={"application/json;charset=utf-8"})
 	public List<TreeNode> getTreeData(String roleId) {
+		
 		return menuService.getMenuTreeNode(Integer.parseInt(roleId));
 	}
 	
