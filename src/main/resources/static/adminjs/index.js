@@ -12,10 +12,11 @@ var _menus={
 			 	{
 			 		"icon":"icon-sys","menuid":"100","menuname":"系统管理","menus": 
 					[
-						{"icon":"icon-sys","menuid":"101","menuname":"监测数据查询","url":"listEnv.html"},
+						{"icon":"icon-sys","menuid":"101","menuname":"监测数据查询","url":"house.html"},
 						{"icon":"icon-sys","menuid":"102","menuname":"学生管理","url":"student.html"},
 						{"icon":"icon-sys","menuid":"103","menuname":"资产管理","url":"asset.html"},
-						{"icon":"icon-sys","menuid":"103","menuname":"角色管理","url":"role.html"}
+						{"icon":"icon-sys","menuid":"103","menuname":"角色管理","url":"role.html"},
+						{"icon":"icon-sys","menuid":"103","menuname":"用户管理","url":"user.html"}
 					]
 			 	},
 			 	{
@@ -30,10 +31,10 @@ var _menus={
 			 	{
 			 		"icon":"icon-sys","menuid":"300","menuname":"其他","menus":
 					[
-						{"icon":"icon-sys","menuid":"301","menuname":"灯光控制记录","url":""},
-						{"icon":"icon-sys","menuid":"302","menuname":"空调控制记录","url":""},
-						{"icon":"icon-sys","menuid":"302","menuname":"学生考勤记录","url":""},
-						{"icon":"icon-sys","menuid":"302","menuname":"资产进出记录","url":""}
+						{"icon":"icon-sys","menuid":"301","menuname":"教室管理","url":"classroom.html"},
+						{"icon":"icon-sys","menuid":"302","menuname":"使用记录","url":""},
+						{"icon":"icon-sys","menuid":"302","menuname":"控制日志","url":""},
+						{"icon":"icon-sys","menuid":"302","menuname":"菜单","url":"menu.html"}
 					]
 			 	}
 			 ]

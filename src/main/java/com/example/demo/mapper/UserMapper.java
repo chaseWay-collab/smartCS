@@ -21,7 +21,7 @@ public interface UserMapper extends Mapper<User> {
 	void updatePwd(@Param("id")Integer id, @Param("pass")String pass);
 	
 	@Insert("insert into user(userName, userPass, realName, gender, phone) "
-			+ "values(#{userName}, password(#{userPass}), #{realName}, #{gender}, #{phone})")
+			+ "values(#{userName}, password#{userPass}, #{realName}, #{gender}, #{phone})")
 	void insertUser(User user);
 
 	@Delete("delete from userrole where userId = #{userId}")

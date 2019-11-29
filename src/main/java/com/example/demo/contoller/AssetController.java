@@ -21,10 +21,6 @@ public class AssetController extends BaseController {
 	@Autowired
 	private IAssetService assetService;
 	
-	/*@RequestMapping(value="/getData.do", produces="application/json;charset=utf-8")
-	public List<Asset> getData() {
-		return assetService.findAll();
-	}*/
 	
 	@RequestMapping(value="/deleteAll.do", produces="application/json;charset=utf-8")
 	public Map<String, Object> deleteAllAsset(String ids) {
@@ -51,7 +47,7 @@ public class AssetController extends BaseController {
 	
 	@RequestMapping(value="/update.do", produces="application/json;charset=utf-8")
 	public Map<String, Object> updateAsset(Asset asset) {
-		System.out.println("asset = " + asset);
+
 		try {
 			// 查询学号和rfid是否存在，如果存在就执行保存操作
 			boolean isOk = assetService.checkNumAndRfid(asset.getId(), asset.getNum(), asset.getRfid());
@@ -100,7 +96,7 @@ public class AssetController extends BaseController {
 			c.andEqualTo("num", num);
 		}
 		// 排序条件
-		example.setOrderByClause("state asc");
+		example.setOrderByClause("id asc");
 		// 调用分页查询方法
 		List list = assetService.findByPage(example
 				, Integer.parseInt(page), Integer.parseInt(rows));

@@ -20,7 +20,20 @@
 					location = "login.html";
 				}
 			}, "json");
+			
+			$("#show").html(oneValues());
 		});
+		
+		//接收一个值
+		function oneValues(){
+		var result;
+		var url=window.location.search; //获取url中"?"符后的字串  
+		if(url.indexOf("?")!=-1){
+		result = url.substr(url.indexOf("=")+1);
+		}
+		return result;
+		}
+
 		
 		function logout() {
 			$.post('sys/logout.do', function(rt) {
@@ -46,12 +59,13 @@
         background: url(images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%;
         line-height: 20px;color: #fff; font-family: Verdana, 微软雅黑,黑体">
         <span style="float:right; padding-right:20px;" class="head">欢迎 <span id="user"></span>  <a href="#" id="editpass">修改密码</a> <a href="javascript:logout()" id="loginOut">安全退出</a></span>
-        <span style="padding-left:10px; font-size: 16px; "><img src="images/blocks.gif" width="20" height="20" align="absmiddle" /> 智能教室管理系统</span>
+        <span style="padding-left:10px; font-size: 16px; "><img src="images/blocks.png" width="24" height="24" align="absmiddle" /> 智能教室管理系统</span>
+        <span id="class"></span>
     </div>
     <div region="south" split="true" style="height: 30px; background: #D2E0F2; ">
         <div class="footer"></div>    
     </div>
-    <div region="west" split="true"  title="导航菜单" style="width:180px;" id="west">
+    <div region="east" split="true"  title="导航菜单" style="width:180px;" id="east">
 			<div id="nav">
 		<!--  导航内容 -->
 				

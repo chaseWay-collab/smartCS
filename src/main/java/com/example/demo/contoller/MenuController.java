@@ -32,9 +32,9 @@ public class MenuController extends BaseController {
 	}
 	
 	@RequestMapping(value="/getTreeData.do", produces={"application/json;charset=utf-8"})
-	public List<TreeNode> getTreeData(String roleId) {
+	public List<TreeNode> getTreeData(String s) {
 		
-		return menuService.getMenuTreeNode(Integer.parseInt(roleId));
+		return menuService.getMenuTreeNode(Integer.parseInt(s));
 	}
 	
 	@RequestMapping(value="/getMenus.do", produces={"application/json;charset=utf-8"})

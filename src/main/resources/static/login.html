@@ -9,7 +9,7 @@
 <script type="text/javascript" src="adminjs/form.js"></script>
 <script>
 	function login() {
-		// {username: 'tiger', userpass: '12345'}
+		// {username: 'tiger', userpass: '123'}
 		var data = getFormData("loginform"); //返回一个保存表单数据的json对象
 		//获取复选框的选中状态，如果是已选中，那么就设置参数为true，否则为false。
 		if ($("input[type='checkbox']").prop("checked")) { //如果checked属性值为true，代表已选中；如果是false代表未选中
@@ -55,7 +55,8 @@
 		<div id="userInfo">
 			<span
 				style="float: left; margin-left: 40px; height: 200px; border: 0px solid red"><img
-				src='images/logo.png' id='admin' /></span> <span
+				src='images/logo.png' id='admin' /></span> 
+				<span
 				style="float: left; margin-left: 40px; height: 200px; border: 0px solid red">
 				<div id="signup_forms" class="signup_forms clearfix">
 					<form class="signup_form_form" id="loginform" method="post">
