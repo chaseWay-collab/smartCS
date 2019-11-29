@@ -1,0 +1,195 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能楼宇系统 - GEC©</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+<link rel="stylesheet" type="text/css" href="css/styles.css" />
+<link rel="stylesheet" type="text/css" href="css/normalize.css">
+<link rel="stylesheet" type="text/css" href="css/demo.css">
+<link rel="stylesheet" type="text/css" href="css/dialog.css">
+<link rel="stylesheet" type="text/css" href="css/dialog-wilma.css">
+<link rel="stylesheet" type="text/css" href="css/mine.css">
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="js/modernizr.custom.js"></script>
+<script src="js/classie.js"></script>
+<script src="js/dialogFx.js"></script>
+</head>
+<body>
+	<article class="htmleaf-container">
+		<header class="htmleaf-header">
+			<img src="css/img/logo.png" />
+			<h1><a th:href="@{/index}" style="color:black">智慧控制系统管理中心</a></h1>
+		</header>
+		<div class="container">
+			<div id="fire" class="detective">火焰检测<div class="val"> - </div></div>
+			<div id="smoke" class="detective">烟雾检测<div class="val"> - </div></div>
+			<div id="body" class="detective">人体检测<div class="val"> - </div></div>
+			<div id="tempAndHumi" class="detective" style="width:49.5%;">温湿度检测<div class="val"> - </div></div>
+			<div id="illuminance" class="detective" style="width:49.5%;">光照度检测<div class="val"> - </div></div>
+			<div class="my-hr"></div>
+		</div>
+		
+		<div class="container">
+			<div class="control">安防控制<div class="val">关闭</div></div>
+			<div class="control">风扇控制<div class="val">关闭</div></div>
+			<div class="control">灯光控制<div class="val">关闭</div></div>
+			<div data-dialog="somedialog" class="control" style="width:49.5%;line-height:100px;">空调控制</div>
+			<div class="control" style="width:49.5%;cursor:auto;text-align:left;padding-left:1em;">
+				步进电机控制
+				<p style="margin: -1em 0 10px 4em;">设置步数：<input id="setStep" type="text" value="15" style="width:75px;height:23px;color:#000;padding-left:2px;">
+				<input class="my-input-btn" type="button" value="正转">
+				<input class="my-input-btn" type="button" value="反转">
+			</div>
+		</div>
+		<div id="somedialog" class="dialog">
+			<div class="dialog__overlay"></div>
+			<div class="dialog__content">
+				<div class="morph-shape">
+					<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 280" preserveAspectRatio="none">
+						<rect x="3" y="3" fill="none" width="556" height="276"/>
+					</svg>
+				</div>
+				<div class="dialog-inner">
+					<h2><strong>空调控制</strong></h2>
+					<h3 class="title">当前温度： <font id="tempVal">25</font> ℃</h3>
+					<button id="btn_timing" data-ripple style="margin-top:16px;">
+					   定时
+					</button>
+					<button id="btn_leaf" data-ripple style="margin-top:16px;">
+					   保鲜
+					</button>
+					<button id="btn_carbon_dioxide" data-ripple style="margin-top:16px;">
+					   增氧
+					</button>
+					<button id="btn_humidify" data-ripple style="margin-top:16px;">
+					   加湿
+					</button>
+					<button id="btn_heat" data-ripple style="margin-top:16px;">
+					   加热
+					</button>
+					<button id="btn_draft" data-ripple style="margin-top:16px;">
+					   抽风
+					</button>
+					<button id="btn_sleep" data-ripple style="margin-top:16px;width:12em;">
+					   睡眠
+					</button>
+					<button id="btn_initial" data-ripple style="margin-top:16px;width:12em;">
+					 25初始
+					</button>
+					<div class="icon-mine-decrease-add" style="margin-right:0.6em;">－</div><div class="icon-mine-decrease-add">＋</div>
+					<p style="margin-top: 30px;font-size: 17px;"></p>
+					<div><button class="action" data-dialog-close>关闭</button></div>
+				</div>
+			</div>
+		</div>
+	</article>
+	<!-- <div class="copyright" style="text-align:center;">Copyright © 2016-2017 粤嵌.All Rights Reserved. 苏ICP备13000566号-1</div> -->
+	
+	<script>
+	$(function(){
+		// 启用定时器
+		setInterval(function(){
+			// 使用异步方式从后台获取检测数据
+			$.ajax({
+				type: "POST", // 请求方式
+				url: "refreshData", // 请求地址
+				dataType: "json", // 返回数据的格式
+				success: function(e){ // 服务器响应成功后的处理函数，e代表后台传过来的json对象
+					// 把温度和湿度的数据设置到class属性等于val的元素中
+					$("#tempAndHumi").find(".val").text(e.temperature+"℃，"+e.humidity+"RH%");
+				}
+			});
+		}, 400); // 每400毫秒执行一次
+			
+		// 发送指令的方法
+		function sendOrder(order){
+			$.ajax({
+				type: "post", // 请求方式
+				url: "controlDevice", // 请求地址
+				data: { 
+					order : order  // 请求数据
+				},
+				success: function(){ // 服务器响应成功后的处理函数
+					
+				}
+			});
+		}
+
+		// 打开温度控制的弹出框
+		var dlgtrigger = document.querySelector( '[data-dialog]' );
+		var attrName = dlgtrigger.getAttribute( 'data-dialog' );
+		somedialog = document.getElementById(attrName);
+		dlg = new DialogFx( somedialog );
+		dlgtrigger.addEventListener( 'click', dlg.toggle.bind(dlg) );
+		
+		// 给控制按钮添加单击事件
+		// 当鼠标单击按钮的时候会自动触发该事件对应的处理函数
+		$(".control").on("click", function(){
+			var order = "";
+			if($(this).text().indexOf("灯光控制") != -1){
+				// 根据灯光控制按钮的文本判断是打开还关闭
+				if($(this).text().indexOf("关闭") != -1){ 
+					// 修改按钮的文本为“打开”
+					$(this).find(".val").text("打开");
+					// 发送开启灯光的指令
+					order = "FE 08 01 0C FF FF 01 XX"; 
+				} else {
+					// 修改按钮的文本为“打开”
+					$(this).find(".val").text("关闭");
+					// 发送关闭灯光的指令
+					order = "FE 08 01 0C FF FF 00 XX"; 
+				}
+			}
+			// 如果指令不为空，就开始发送指令。
+			if(order != ""){
+				sendOrder(order);
+			}
+		});
+		
+		// 给空调控制按钮绑定单击事件
+		$(".dialog-inner").find("button").on("click",function(){
+			var number = parseInt($("#tempVal").text());
+			// 根据按钮的ID属性判断当前用户点击哪个按钮
+			switch($(this).attr("id")) {
+				case "btn_timing":sendOrder("FE 0A 01 0A FF FF "+number.toString(16)+" 0E 07 XX");break;
+				case "btn_leaf":sendOrder("FE 0A 01 0A FF FF "+number.toString(16)+" 0E 05 XX");break;
+				case "btn_carbon_dioxide":sendOrder("FE 0A 01 0A FF FF "+number.toString(16)+" 0E 04 XX");break;
+				case "btn_humidify":sendOrder("FE 0A 01 0A FF FF "+number.toString(16)+" 0E 01 XX");break;
+				case "btn_heat":sendOrder("FE 0A 01 0A FF FF "+number.toString(16)+" 0E 02 XX");break;
+				case "btn_draft":sendOrder("FE 0A 01 0A FF FF "+number.toString(16)+" 0E 03 XX");break;
+				case "btn_sleep":sendOrder("FE 0A 01 0A FF FF "+number.toString(16)+" 0E 06 XX");break;
+				case "btn_initial":
+					sendOrder("FE 0A 01 0A FF FF "+parseInt("25").toString(16)+" 0E 08 XX");
+					$("#tempVal").text("25");
+				break;
+			}
+		});
+		
+		// 给加减温度按钮绑定事件
+		$(".icon-mine-decrease-add").on("click",function(){
+			// 获取当前温度的值
+			var number = parseInt($("#tempVal").text());
+			if(number != "-" && !isNaN(number)){
+				// 判断当前点击的按钮的文本判断用户的操作
+				if($(this).text() == "－") {
+					number--;
+				} else if($(this).text() == "＋") {
+					number++;
+				}
+				// 如果温度在16和31度的范围内，就发送指令给控制中心进行处理
+				if((number <= 31) && (number >= 16)){
+					$("#tempVal").text(number);
+					sendOrder("FE 0A 01 0A FF FF "+number.toString(16)+" 0E 08 XX");
+				}
+			}
+		});
+		
+			
+	});
+	</script>
+</body>
+</html>
